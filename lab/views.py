@@ -2,8 +2,9 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from lab.models import Lab,LabIp
 from lab.serializer import LabSerializer
-from lab.ip_serializer import LabIpSerializer
+
 # Create your views here.
+from lab_ip.serializers import LabIpSerializer
 
 
 class LabViewSet(viewsets.ModelViewSet):
