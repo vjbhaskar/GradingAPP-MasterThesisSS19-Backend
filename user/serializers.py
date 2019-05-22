@@ -7,22 +7,30 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ('fdnumber','department', 'user_type','photo')
+        fields = ('department','photo')
 
 
 class UserSerializer(serializers.ModelSerializer):
-    profile = UserProfileSerializer(required=True)
+
+    profile = UserProfileSerializer(required=True, many=False)
+    # lab_ip = LabIpSerializer(read_only=True,many=False)
 
     class Meta:
         model = User
-        fields = ('id', 'password', 'username', 'email', 'first_name', 'last_name', 'profile','files','date_created')
+        fields = ('id', 'password', 'user_type', 'username', 'email',
+        'first_name', 'last_name', 'profile','files','date_created')
         extra_kwargs = {'password': {'write_only': True}}
         read_only_fields = ('files',)
+
+    # def __init__(self, *args, **kwargs):
+    #     from lab.serializer import LabIpSerializer
+    #     self.fields['lab_ip'] = LabIpSerializer(read_only=True, many=False)
 
     def create(self, validated_data):
         profile_data = validated_data.pop('profile')
         password = validated_data.pop('password')
         #create an obj and pass the validated data into it
+        #profile.user_type = profile_data.get('user_type', profile.user_type)
         user = User(**validated_data)
         user.set_password(password)
         user.save()
@@ -35,8 +43,6 @@ class UserSerializer(serializers.ModelSerializer):
 
         instance.email = validated_data.get('email', instance.email)
         instance.save()
-        profile.user_type = profile_data.get('user_type', profile.user_type)
-        profile.fdnumber = profile_data.get('fdnumber', profile.fdnumber)
         profile.department = profile_data.get('department', profile.department)
         profile.photo = profile_data.get('photo', profile.photo)
         profile.save()

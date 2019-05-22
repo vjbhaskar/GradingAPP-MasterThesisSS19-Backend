@@ -6,7 +6,7 @@ from user.serializers import UserSerializer,FileSerializer
 from user.permissions import IsLoggedInUserOrAdmin, IsAdminUser
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.permissions import IsAuthenticated,AllowAny,IsAdminUser,IsAuthenticatedOrReadOnly
-from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView,ListAPIView
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -25,6 +25,13 @@ class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset=User.objects.all()
     serializer_class=UserSerializer
     lookup_field='id'
+
+class StudentsListAPIView(ListAPIView):
+    queryset=User.objects.filter(user_type=1)
+    serializer_class=UserSerializer
+class LabAdminsListAPIView(ListAPIView):
+    queryset=User.objects.filter(user_type=3)
+    serializer_class=UserSerializer
 
 
 
