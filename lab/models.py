@@ -9,6 +9,7 @@ User = get_user_model()
 class Lab(models.Model):
     room_building= models.CharField(unique=True,max_length=255)
     lab_admin = models.ForeignKey(User,on_delete=models.CASCADE, related_name='lab')
+    file_obj = models.FileField(upload_to='uploads',blank=True,null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 

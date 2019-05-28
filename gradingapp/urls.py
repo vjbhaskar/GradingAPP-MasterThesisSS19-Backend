@@ -23,6 +23,7 @@ from user import views as user_views
 from file import views as file_views
 from subject import views as subject_views
 from lab import views as lab_views
+from lab_ip import views as lab_ip_views
 
 router=DefaultRouter()
 router.register('users',user_views.UserViewSet)
@@ -43,5 +44,6 @@ urlpatterns = [
     url(r'^api/user/(?P<id>[0-9a-f-]+)/$',user_views.UserRetrieveUpdateDestroyAPIView.as_view()),
     url(r'^api/file/$',file_views.FileListCreateAPIView.as_view()),
     url(r'^api/file/(?P<id>\d+)/$',file_views.FileRetrieveUpdateDestroyAPIView.as_view()),
+    url(r'^api/assignstudents/$',lab_ip_views.LabIpUpdateAPIView.as_view()),
 ]
 #
