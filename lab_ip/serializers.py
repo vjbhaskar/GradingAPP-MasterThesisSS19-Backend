@@ -30,6 +30,7 @@ class LabIpSerializer(serializers.ModelSerializer):
         lab_ip.save()
         return lab_ip
 
+
 class LabIpStudentSerializer(serializers.ModelSerializer):
     student = UserSerializer(read_only=True)
 
@@ -38,18 +39,18 @@ class LabIpStudentSerializer(serializers.ModelSerializer):
         fields = ('id', 'ip', 'lab', 'date_created', 'date_modified', 'student')
         read_only_fields = ('lab',)
 
-    def update(self, validated_data):
-        print('debba=================',self.initial_data)
-        lab_id = self.initial_data['lab_id']
-        studentarr = self.initial_data['student_arr']
-        print('studentObj=================',studentarr,lab_id)
-        for student in studentarr:
-            print(student)
-            studentObj = User.objects.get(pk=student_id)
-            print('studentObj=================',studentObj)
-        # student = User.objects.get(pk=student_id)
-        # print(student)
-        # lab = Lab.objects.get(pk=lab_id)
-        # lab_ip = LabIp(ip=ip, lab=lab, student=student)
-        # lab_ip.save()
-        return lab_ip
+    # def update(self, validated_data):
+    #     print('debba=================',self.initial_data)
+    #     lab_id = self.initial_data['lab_id']
+    #     studentarr = self.initial_data['student_arr']
+    #     print('studentObj=================',studentarr,lab_id)
+    #     for student in studentarr:
+    #         print(student)
+    #         studentObj = User.objects.get(pk=student_id)
+    #         print('studentObj=================',studentObj)
+    #     # student = User.objects.get(pk=student_id)
+    #     # print(student)
+    #     # lab = Lab.objects.get(pk=lab_id)
+    #     # lab_ip = LabIp(ip=ip, lab=lab, student=student)
+    #     # lab_ip.save()
+    #     return lab_ip

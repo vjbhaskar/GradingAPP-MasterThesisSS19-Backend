@@ -7,8 +7,8 @@ User = get_user_model()
 
 # Create your models here.
 class Lab(models.Model):
+    lab_admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lab')
     room_building= models.CharField(unique=True,max_length=255)
-    lab_admin = models.ForeignKey(User,on_delete=models.CASCADE, related_name='lab')
     file_obj = models.FileField(upload_to='uploads',blank=True,null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
@@ -18,9 +18,9 @@ class Lab(models.Model):
 
 
 class LabIp(models.Model):
-    ip = models.CharField(max_length=255, blank=True, unique=True)
     lab = models.ForeignKey(Lab, on_delete=models.CASCADE, related_name='lab_ips')
     student = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='lab_ip', blank=True, null=True)
+    ip = models.CharField(max_length=255, blank=True, unique=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 

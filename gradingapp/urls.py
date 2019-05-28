@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
+from django.urls import path
 from rest_framework import routers
 from rest_framework.authtoken import views
 from rest_framework_jwt.views import obtain_jwt_token,refresh_jwt_token,verify_jwt_token
 from rest_framework.routers import DefaultRouter
+
+from lab_ip.views import assign_ips
 from user import views as user_views
 from file import views as file_views
 from subject import views as subject_views
@@ -34,6 +37,7 @@ router.register('labIp',lab_views.LabIpViewSet)
 urlpatterns = [
 
     url(r'api/',include(router.urls)),
+    path('api/assign_students/', assign_ips),
     url(r'^admin/', admin.site.urls),
     url(r'^auth-jwt/',obtain_jwt_token),
     url(r'^auth-jwt-refresh/',refresh_jwt_token),
@@ -44,6 +48,6 @@ urlpatterns = [
     url(r'^api/user/(?P<id>[0-9a-f-]+)/$',user_views.UserRetrieveUpdateDestroyAPIView.as_view()),
     url(r'^api/file/$',file_views.FileListCreateAPIView.as_view()),
     url(r'^api/file/(?P<id>\d+)/$',file_views.FileRetrieveUpdateDestroyAPIView.as_view()),
-    url(r'^api/assignstudents/$',lab_ip_views.LabIpUpdateAPIView.as_view()),
+    # url(r'^api/assignstudents/$',lab_ip_views.LabIpUpdateAPIView.as_view()),
 ]
 #
