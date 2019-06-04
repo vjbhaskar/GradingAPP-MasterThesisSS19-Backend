@@ -19,15 +19,28 @@ class Lab(models.Model):
 
 class LabIp(models.Model):
     lab = models.ForeignKey(Lab, on_delete=models.CASCADE, related_name='lab_ips')
-    student = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='lab_ip', blank=True, null=True)
+    student1 = models.ForeignKey(
+        User,
+        on_delete=models.DO_NOTHING,
+        related_name='std1_lab_ip',
+        blank=True,
+        null=True
+    )
+    student2 = models.ForeignKey(
+        User,
+        on_delete=models.DO_NOTHING,
+        related_name='std2_lab_ip',
+        blank=True,
+        null=True
+    )
     ip = models.CharField(max_length=255, blank=True, unique=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ['student', 'lab', 'ip']
+        unique_together = ['lab', 'ip']
         db_table = 'lab_ips'
         ordering = ['-date_created']
 
     def __str__(self):
-        return '{} - {}'.format(self.ip, self.lab.pk)
+        return '{} - ID={}'.format(self.ip, self.lab.pk)

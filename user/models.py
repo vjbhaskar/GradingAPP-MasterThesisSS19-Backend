@@ -19,6 +19,10 @@ class User(AbstractUser):
     date_modified = models.DateTimeField(auto_now=True)
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
 
+    # Professor se clear karna k 1st timeslot students ko pehle se inform karde
+    # nomenclature of first and second time slots
+    timeslot = models.IntegerField(default=1, blank=True)
+
     USERNAME_FIELD = 'username'
 
     # shows username in admin view table instead of Employee Obj

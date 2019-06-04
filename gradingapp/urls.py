@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
-from django.urls import path
 from rest_framework import routers
 from rest_framework.authtoken import views
 from rest_framework_jwt.views import obtain_jwt_token,refresh_jwt_token,verify_jwt_token
@@ -37,7 +36,7 @@ router.register('labIp',lab_views.LabIpViewSet)
 urlpatterns = [
 
     url(r'api/',include(router.urls)),
-    path('api/assign_students/', assign_ips),
+    url(r'api/assign_students/', assign_ips),
     url(r'^admin/', admin.site.urls),
     url(r'^auth-jwt/',obtain_jwt_token),
     url(r'^auth-jwt-refresh/',refresh_jwt_token),
