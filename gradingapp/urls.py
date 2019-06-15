@@ -21,6 +21,7 @@ from rest_framework_jwt.views import obtain_jwt_token,refresh_jwt_token,verify_j
 from rest_framework.routers import DefaultRouter
 
 from lab_ip.views import assign_ips
+from lab_ip.views import de_assign_ips
 from user import views as user_views
 from file import views as file_views
 from subject import views as subject_views
@@ -37,6 +38,7 @@ urlpatterns = [
 
     url(r'api/',include(router.urls)),
     url(r'api/assign_students/', assign_ips),
+    url(r'api/de_assign_students/', de_assign_ips),
     url(r'^admin/', admin.site.urls),
     url(r'^auth-jwt/',obtain_jwt_token),
     url(r'^auth-jwt-refresh/',refresh_jwt_token),

@@ -6,11 +6,12 @@ from user.models import User
 
 class LabIpSerializer(serializers.ModelSerializer):
     # lab = LabSerializer(read_only=True, many=False)
-    student = UserSerializer(read_only=True)
+    student1 = UserSerializer(read_only=True)
+    student2 = UserSerializer(read_only=True)
 
     class Meta:
         model = LabIp
-        fields = ('id', 'ip', 'lab', 'date_created', 'date_modified', 'student')
+        fields = ('id', 'ip', 'lab', 'date_created', 'date_modified', 'student1','student2')
         read_only_fields = ('lab',)
 
     def create(self, validated_data):
