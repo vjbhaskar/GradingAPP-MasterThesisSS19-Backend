@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from exam.models import Exam
 import uuid
 
 
@@ -12,6 +13,7 @@ class User(AbstractUser):
       (3, 'labadmin'),
       (4, 'admin'),
     )
+    exam = models.ForeignKey(Exam, on_delete=models.DO_NOTHING, related_name='users', null=True, blank=True)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username = models.CharField(unique=True,max_length=255)
     email = models.EmailField(_('email address'),null=True)

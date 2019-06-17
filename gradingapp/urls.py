@@ -27,13 +27,16 @@ from file import views as file_views
 from subject import views as subject_views
 from lab import views as lab_views
 from lab_ip import views as lab_ip_views
+from time_slot import views as timeslot_views
+from exam import views as exam_views
 
 router=DefaultRouter()
 router.register('users',user_views.UserViewSet)
 router.register('subject',subject_views.SubjectViewSet)
 router.register('lab',lab_views.LabViewSet)
 router.register('labIp',lab_views.LabIpViewSet)
-
+router.register('timeSlot',timeslot_views.Time_SlotViewSet)
+router.register('exam',exam_views.ExamViewSet)
 urlpatterns = [
 
     url(r'api/',include(router.urls)),

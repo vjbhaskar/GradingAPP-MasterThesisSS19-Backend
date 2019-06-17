@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'user',
     'file',
     'subject',
-    'lab'
+    'lab',
+    'time_slot',
+    'exam'
 ]
 
 MIDDLEWARE = [

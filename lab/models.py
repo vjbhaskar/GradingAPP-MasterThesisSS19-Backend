@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from exam.models import Exam
 
 
 User = get_user_model()
@@ -8,6 +9,7 @@ User = get_user_model()
 # Create your models here.
 class Lab(models.Model):
     lab_admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lab')
+    exam = models.ForeignKey(Exam, on_delete=models.DO_NOTHING, blank=True, null=True)
     room_building= models.CharField(unique=True,max_length=255)
     file_obj = models.FileField(upload_to='uploads',blank=True,null=True)
     date_created = models.DateTimeField(auto_now_add=True)
