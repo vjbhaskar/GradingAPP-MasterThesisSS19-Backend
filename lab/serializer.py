@@ -18,20 +18,24 @@ class LabSerializer(serializers.ModelSerializer):
         # to get request args
 
         lab_admin_id = self.initial_data['lab_admin']
-        print('lab_admin_id==================',lab_admin_id,room_building)
+        print('lab_admin_id==================', lab_admin_id, room_building)
+        if lab_admin_id != "":
+            lab_admin = User.objects.get(pk=lab_admin_id)
+            lab = Lab(room_building=room_building, lab_admin=lab_admin)
+            lab.save()
+        else:
+            lab = Lab(room_building=room_building)
+            lab.save()
 
-        lab_admin = User.objects.get(pk=lab_admin_id)
-        lab = Lab(room_building=room_building,lab_admin=lab_admin)
-        lab.save()
-        print('lab==================',lab)
-
-        iparr = self.initial_data['ip_arr']
-
-        for ip in iparr:
-            print(ip)
-            ip_txt = ip
-            lab_obj = lab
-            student= None
-            lab_ip = LabIp(ip=ip_txt, lab=lab_obj, student=student)
-            lab_ip.save()
+        # print('lab==================',lab)
+        #
+        # iparr = self.initial_data['ip_arr']
+        #
+        # for ip in iparr:
+        #     print(ip)
+        #     ip_txt = ip
+        #     lab_obj = lab
+        #     student= None
+        #     lab_ip = LabIp(ip=ip_txt, lab=lab_obj, student=student)
+        #     lab_ip.save()
         return lab

@@ -8,15 +8,15 @@ User = get_user_model()
 
 # Create your models here.
 class Lab(models.Model):
-    lab_admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lab')
+    lab_admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lab', blank=True, null=True)
     exam = models.ForeignKey(Exam, on_delete=models.DO_NOTHING, blank=True, null=True)
-    room_building= models.CharField(unique=True,max_length=255)
-    file_obj = models.FileField(upload_to='uploads',blank=True,null=True)
+    room_building = models.CharField(unique=True, max_length=255)
+    file_obj = models.FileField(upload_to='uploads', blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '{x} - {y}'.format(x=self.pk, y=self.lab_admin.username)
+        return '{x} - {y}'.format(x=self.pk, y=self.room_building)
 
 
 class LabIp(models.Model):

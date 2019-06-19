@@ -15,14 +15,12 @@ class User(AbstractUser):
     )
     exam = models.ForeignKey(Exam, on_delete=models.DO_NOTHING, related_name='users', null=True, blank=True)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    username = models.CharField(unique=True,max_length=255)
-    email = models.EmailField(_('email address'),null=True)
+    username = models.CharField(unique=True, max_length=255)
+    email = models.EmailField(_('email address'), null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
 
-    # Professor se clear karna k 1st timeslot students ko pehle se inform karde
-    # nomenclature of first and second time slots
     timeslot = models.IntegerField(default=1, blank=True)
 
     USERNAME_FIELD = 'username'

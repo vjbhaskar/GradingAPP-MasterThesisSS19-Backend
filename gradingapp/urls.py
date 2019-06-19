@@ -52,6 +52,9 @@ urlpatterns = [
     url(r'^api/user/(?P<id>[0-9a-f-]+)/$',user_views.UserRetrieveUpdateDestroyAPIView.as_view()),
     url(r'^api/file/$',file_views.FileListCreateAPIView.as_view()),
     url(r'^api/file/(?P<id>\d+)/$',file_views.FileRetrieveUpdateDestroyAPIView.as_view()),
+    url(r'api/user/bulkstudents', user_views.create_user),
+    url(r'api/labIp/bulk', lab_views.create_bulk_ips)
+
     # url(r'^api/assignstudents/$',lab_ip_views.LabIpUpdateAPIView.as_view()),
 ]
 #
