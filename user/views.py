@@ -41,7 +41,7 @@ def create_user(request):
 
         # Load json data from body
         # parsed_data = json.loads(request.body)
-        print("students===========",request.FILES)
+        print("students===========", request.FILES)
         csv_file = request.FILES['user_list']
         decoded_file = csv_file.read().decode('utf-8')
         io_string = io.StringIO(decoded_file)

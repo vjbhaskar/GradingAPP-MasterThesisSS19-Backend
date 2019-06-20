@@ -13,14 +13,14 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
 
     profile = UserProfileSerializer(required=True, many=False)
-    # lab_ip = LabIpSerializer(read_only=True,many=False)
+    # ip = LabIpSerializer(read_only=True, many=False)
 
     class Meta:
         model = User
         fields = (
             'id', 'password', 'user_type', 'username', 'email',
-            'first_name', 'last_name', 'time_slot', 'ip', 'profile',
-            'files','date_created', 'date_modified'
+            'first_name', 'last_name', 'time_slot', 'ip', 'exam', 'profile',
+            'files', 'date_created', 'date_modified'
         )
         depth = 1
         extra_kwargs = {'password': {'write_only': True}}
