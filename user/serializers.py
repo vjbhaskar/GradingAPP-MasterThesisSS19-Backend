@@ -17,8 +17,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'password', 'user_type', 'username', 'email',
-        'first_name', 'last_name', 'profile','files','date_created')
+        fields = (
+            'id', 'password', 'user_type', 'username', 'email',
+            'first_name', 'last_name', 'time_slot', 'ip', 'profile',
+            'files','date_created', 'date_modified'
+        )
+        depth = 1
         extra_kwargs = {'password': {'write_only': True}}
         read_only_fields = ('files',)
 
@@ -78,5 +82,3 @@ class FileSerializer(serializers.ModelSerializer):
 
         file.save()
         return file
-
-

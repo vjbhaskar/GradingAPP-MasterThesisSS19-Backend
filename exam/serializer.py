@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from exam.models import Exam
 from subject.serializer import SubjectSerializer
-from time_slot.serializer import Time_SlotSerializer
+from lab.serializer import Time_SlotSerializer
 
 class ExamSerializer(serializers.ModelSerializer):
     subject = SubjectSerializer(many=False)

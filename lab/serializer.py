@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from lab.models import Lab, LabIp
+from lab.models import Lab, LabIp, Time_Slot
 from lab_ip.serializers import LabIpSerializer
 from user.serializers import UserSerializer
 from user.models import User
@@ -39,3 +39,10 @@ class LabSerializer(serializers.ModelSerializer):
         #     lab_ip = LabIp(ip=ip_txt, lab=lab_obj, student=student)
         #     lab_ip.save()
         return lab
+
+
+class Time_SlotSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Time_Slot
+        fields = '__all__'

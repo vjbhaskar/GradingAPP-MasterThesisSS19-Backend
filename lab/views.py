@@ -1,14 +1,9 @@
 from django.http import JsonResponse
-from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
-
-from lab.models import Lab,LabIp
-from lab.serializer import LabSerializer
-from lab_ip.serializers import LabIpStudentSerializer
-# Create your views here.
-from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView,ListAPIView
+from lab.models import Lab, LabIp, Time_Slot
+from lab.serializer import Time_SlotSerializer, LabSerializer
 from lab_ip.serializers import LabIpSerializer
 import io
 import csv
@@ -62,3 +57,7 @@ def create_bulk_ips(request):
     else:
         return JsonResponse({'msg': 'Method not allowed!', 'success': 0}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
+
+class Time_SlotViewSet(viewsets.ModelViewSet):
+    queryset = Time_Slot.objects.all()
+    serializer_class = Time_SlotSerializer

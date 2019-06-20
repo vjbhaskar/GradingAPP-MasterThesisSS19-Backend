@@ -1,7 +1,5 @@
 from django.db import models
-from time_slot.models import Time_Slot
 from subject.models import Subject
-from time_slot.models import Time_Slot
 # from django.contrib.auth import get_user_model
 
 
