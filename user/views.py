@@ -54,8 +54,10 @@ def create_user(request):
             user.username = line[0]
             user.save()
             # UserProfile.objects.create(user=user, profile=profile_data)
-
             # handel error here
+        return JsonResponse({'msg': 'Successfully Created!', 'success': 1}, status=status.HTTP_201_CREATED)
+
+    else:
         return JsonResponse({'msg': 'Method not allowed!', 'success': 0}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 

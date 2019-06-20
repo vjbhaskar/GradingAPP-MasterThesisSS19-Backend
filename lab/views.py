@@ -56,9 +56,9 @@ def create_bulk_ips(request):
                 print(line[0])
                 lab_ip = LabIp(ip=line[0], lab=lab)
                 lab_ip.save()
+            # handel error here
+            return JsonResponse({'msg': 'Successfully Created!', 'success': 1}, status=status.HTTP_201_CREATED)
 
-                # UserProfile.objects.create(user=user, profile=profile_data)
-
-                # handel error here
+    else:
         return JsonResponse({'msg': 'Method not allowed!', 'success': 0}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
