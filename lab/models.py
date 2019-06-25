@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+
 from exam.models import Exam
 
 
@@ -23,20 +25,6 @@ class LabIp(models.Model):
     User = get_user_model()
 
     lab = models.ForeignKey(Lab, on_delete=models.CASCADE, related_name='lab_ips')
-    student1 = models.ForeignKey(
-        User,
-        on_delete=models.DO_NOTHING,
-        related_name='std1_lab_ip',
-        blank=True,
-        null=True
-    )
-    student2 = models.ForeignKey(
-        User,
-        on_delete=models.DO_NOTHING,
-        related_name='std2_lab_ip',
-        blank=True,
-        null=True
-    )
     ip = models.CharField(max_length=255, blank=True, unique=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
@@ -51,8 +39,8 @@ class LabIp(models.Model):
 
 
 class Time_Slot(models.Model):
-    labs = models.ManyToManyField(Lab, related_name='time_slots')
-    name = models.CharField(unique=True,max_length=255)
+    labs = models.ManyToManyField(Lab, through='TimeSlotLabMembership')
+    name = models.CharField(unique=True, max_length=255)
     start_time = models.CharField(max_length=255)
     end_time = models.CharField(max_length=255)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -63,3 +51,25 @@ class Time_Slot(models.Model):
 
     class Meta:
         db_table = "time_slots"
+
+
+class TimeSlotLabMembership(models.Model):
+    lab = models.ForeignKey(Lab, on_delete=models.CASCADE)
+    time_slot = models.ForeignKey(Time_Slot, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'timeslot_lab_memberships'
+
+    def __str__(self):
+        return '{} - {}'.format(self.lab.room_building, self.time_slot.name)
+
+
+def allocate_timeslots_to_labs(**kwargs):
+    labs = Lab.objects.all()
+    instance = kwargs['instance']
+
+    for lab in labs:
+        TimeSlotLabMembership(lab=lab, time_slot=instance).save()
+
+
+post_save.connect(allocate_timeslots_to_labs, sender=Time_Slot)

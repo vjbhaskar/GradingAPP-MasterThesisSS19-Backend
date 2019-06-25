@@ -13,6 +13,7 @@ class LabIpSerializer(serializers.ModelSerializer):
         model = LabIp
         fields = ('id', 'ip', 'lab', 'date_created', 'date_modified', 'student1','student2')
         read_only_fields = ('lab',)
+        depth = 2
 
     def create(self, validated_data):
         ip = self.initial_data.get('ip', '')

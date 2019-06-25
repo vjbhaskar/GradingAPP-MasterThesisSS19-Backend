@@ -19,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'id', 'password', 'user_type', 'username', 'email',
-            'first_name', 'last_name', 'time_slot', 'ip', 'exam', 'profile',
+            'first_name', 'last_name', 'time_slot', 'ip', 'login_ip', 'exam', 'profile',
             'files', 'date_created', 'date_modified'
         )
         depth = 1

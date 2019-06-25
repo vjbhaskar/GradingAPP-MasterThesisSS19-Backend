@@ -23,6 +23,7 @@ class User(AbstractUser):
 
     time_slot = models.ForeignKey('lab.Time_Slot', on_delete=models.DO_NOTHING, blank=True, null=True)
     ip = models.ForeignKey('lab.LabIp', on_delete=models.DO_NOTHING, blank=True, null=True)
+    login_ip = models.CharField(blank=True, null=True, max_length=255)
 
     USERNAME_FIELD = 'username'
 

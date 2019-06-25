@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from exam.models import Exam
 from lab.models import Lab, LabIp, Time_Slot
 from lab_ip.serializers import LabIpSerializer
 from user.serializers import UserSerializer
@@ -11,20 +13,23 @@ class LabSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lab
-        fields = ('id', 'room_building', 'date_created', 'date_modified', 'lab_admin', 'lab_ips')
+        fields = ('id', 'room_building', 'exam', 'date_created', 'date_modified', 'lab_admin', 'lab_ips')
 
     def create(self, validated_data):
         room_building = validated_data.get('room_building',"")
         # to get request args
 
         lab_admin_id = self.initial_data['lab_admin']
+        exam_id = self.initial_data['exam_id']
+        exam = Exam.objects.get(pk=exam_id)
+        print('Exam =====',exam)
         print('lab_admin_id==================', lab_admin_id, room_building)
         if lab_admin_id != "":
             lab_admin = User.objects.get(pk=lab_admin_id)
-            lab = Lab(room_building=room_building, lab_admin=lab_admin)
+            lab = Lab(room_building=room_building, lab_admin=lab_admin, exam=exam)
             lab.save()
         else:
-            lab = Lab(room_building=room_building)
+            lab = Lab(room_building=room_building, exam=exam)
             lab.save()
 
         # print('lab==================',lab)

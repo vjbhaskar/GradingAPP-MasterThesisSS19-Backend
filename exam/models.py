@@ -9,11 +9,13 @@ from subject.models import Subject
 # Create your models here.
 class Exam(models.Model):
     # user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='exam', blank=True, null=True)
-    subject = models.ForeignKey(Subject,on_delete=models.CASCADE, related_name='exams')
-    name = models.CharField(unique=True,max_length=255)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='exams')
+    name = models.CharField(unique=True, max_length=255)
     # TBD More fields
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return 'exam: {}  subject: {}'.format(self.name, self.subject.name)
+
+

@@ -14,11 +14,29 @@ from django.views.decorators.csrf import csrf_exempt
 import io
 import csv
 
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     authentication_classes = [JSONWebTokenAuthentication,]
     permission_classes = [IsAuthenticatedOrReadOnly,]
+
+    def retrieve(self, request, *args, **kwargs):
+        print('inside retrieve!')
+        client_ip = request.META.get('HTTP_X_FORWARDED_FOR')
+        print(client_ip)
+        if client_ip:
+            client_ip = client_ip.split(',')[0]
+        else:
+            client_ip = request.META.get('REMOTE_ADDR')
+        print(client_ip)
+        user_instance = User
+        serializer = UserSerializer(User.objects.all(), request)
+        # print(serializer.initial_data)
+        if serializer.is_valid():
+
+            print(serializer.data)
+        return super(UserViewSet, self).retrieve(request, *args, **kwargs)
 
 
 class UserListCreateAPIView(ListCreateAPIView):

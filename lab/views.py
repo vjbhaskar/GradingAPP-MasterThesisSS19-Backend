@@ -1,3 +1,6 @@
+import json
+import pprint
+
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, status
@@ -5,9 +8,11 @@ from rest_framework.decorators import api_view
 from lab.models import Lab, LabIp, Time_Slot
 from lab.serializer import Time_SlotSerializer, LabSerializer
 from lab_ip.serializers import LabIpSerializer
+from exam.models import Exam
 import io
 import csv
 from user.models import User
+from user.serializers import UserSerializer
 
 
 class LabViewSet(viewsets.ModelViewSet):
@@ -30,16 +35,18 @@ def create_bulk_ips(request):
         # Load json data from body
         # parsed_data = json.loads(request.body)
         room_building = request.data['room_building']
+        exam_id = request.data['exam_id']
+        exam = Exam.objects.get(pk=exam_id)
         # to get request args
         print('lab_admin_id==================', request.data)
-        if request.data['isNoLabAdmin'] is False:
+        if request.data['isNoLabAdmin'] == '2':
             lab_admin_id = request.data['lab_admin']
             lab_admin = User.objects.get(pk=lab_admin_id)
-            lab = Lab(room_building=room_building, lab_admin=lab_admin)
+            lab = Lab(room_building=room_building, lab_admin=lab_admin, exam=exam)
             lab.save()
             print('lab_admin_id==================', lab_admin_id, room_building)
         else:
-            lab = Lab(room_building=room_building)
+            lab = Lab(room_building=room_building, exam=exam)
             lab.save()
 
         if request.FILES:
@@ -52,10 +59,49 @@ def create_bulk_ips(request):
                 lab_ip = LabIp(ip=line[0], lab=lab)
                 lab_ip.save()
             # handel error here
-            return JsonResponse({'msg': 'Successfully Created!', 'success': 1}, status=status.HTTP_201_CREATED)
+        return JsonResponse({'msg': 'Successfully Created!', 'success': 1}, status=status.HTTP_201_CREATED)
 
     else:
         return JsonResponse({'msg': 'Method not allowed!', 'success': 0}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+@csrf_exempt
+@api_view(['POST', ])
+def fetch_lab_assigned_students(request):
+    print('inside assign_ips')
+    if request.method == 'POST':
+
+        # Load json data from body
+        # parsed_data = json.loads(request.body)
+        #lab_id = request.data['lab_id']
+        # to get request args
+
+        lab_id = 8
+
+        lab = Lab.objects.get(pk=lab_id)
+        lab_ips = lab.lab_ips.all()
+        lab_ips_list = [x.id for x in lab_ips]
+
+        users = User.objects.raw('SELECT * FROM user_user WHERE ip_id in %s' % (tuple(lab_ips_list),))
+        print(users)
+        data = []
+        for user in users:
+            print(user.id, user.ip, user.username)
+            data.append({
+                'username': user.username,
+                'ip': user.ip.ip
+            })
+
+        pprint.pprint(data)
+        # See it json functions
+        # data = json.dumps(data, ensure_ascii=False, indent=2)
+
+        if users:
+            return JsonResponse({'msg': 'success', 'success': 1, 'data': data}, status=status.HTTP_200_OK)
+
+    else:
+        return JsonResponse({'msg': 'Method not allowed!', 'success': 0}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
 
 
 class Time_SlotViewSet(viewsets.ModelViewSet):
