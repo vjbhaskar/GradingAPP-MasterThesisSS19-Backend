@@ -78,6 +78,33 @@ def create_user(request):
     else:
         return JsonResponse({'msg': 'Method not allowed!', 'success': 0}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
+@csrf_exempt
+@api_view(['POST', ])
+# @permission_classes([permissions.IsAdminUser, ])
+def get_user_ip(request):
+    print('inside assign_ips')
+    if request.method == 'POST':
+        print('inside retrieve!')
+        client_ip = request.META.get('HTTP_X_FORWARDED_FOR')
+        user_name = request.data['username']
+        user = User.objects.get(username=user_name)
+
+        print(client_ip)
+        if client_ip:
+            client_ip = client_ip.split(',')[0]
+            user.login_ip = client_ip
+            user.save()
+
+        else:
+            client_ip = request.META.get('REMOTE_ADDR')
+            user.login_ip = client_ip
+            user.save()
+        print(client_ip)
+        return JsonResponse({'msg': 'Success!', 'success': 1, 'data': client_ip}, status=status.HTTP_201_CREATED)
+
+    else:
+        return JsonResponse({'msg': 'Method not allowed!', 'success': 0}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
 
 # FOR UPDATE,FETCH AND DELETE
 class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):

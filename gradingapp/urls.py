@@ -29,6 +29,7 @@ from file import views as file_views
 from subject import views as subject_views
 from lab import views as lab_views
 from exam import views as exam_views
+from user.views import get_user_ip
 
 router=DefaultRouter()
 router.register('users',user_views.UserViewSet)
@@ -55,7 +56,8 @@ urlpatterns = [
     url(r'api/user/bulkstudents', user_views.create_user),
     url(r'api/labIp/bulk', lab_views.create_bulk_ips),
     url(r'api/labIp/adminips', lab_views.fetch_lab_assigned_students),
-    url(r'api/assign_single_ip/', assign_single_ip)
+    url(r'api/assign_single_ip/', assign_single_ip),
+    url(r'api/getIp/', get_user_ip)
 
 
     # url(r'^api/assignstudents/$',lab_ip_views.LabIpUpdateAPIView.as_view()),
