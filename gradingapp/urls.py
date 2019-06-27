@@ -30,6 +30,8 @@ from subject import views as subject_views
 from lab import views as lab_views
 from exam import views as exam_views
 from user.views import get_user_ip
+from django.conf import settings
+from django.conf.urls.static import static
 
 router=DefaultRouter()
 router.register('users',user_views.UserViewSet)
@@ -62,4 +64,5 @@ urlpatterns = [
 
     # url(r'^api/assignstudents/$',lab_ip_views.LabIpUpdateAPIView.as_view()),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 #
