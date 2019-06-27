@@ -33,6 +33,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     'http://localhost:4200',
+    'mt-grading-app.herokuapp.com'
 ]
 
 
