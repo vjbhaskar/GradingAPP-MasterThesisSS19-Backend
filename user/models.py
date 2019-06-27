@@ -21,7 +21,9 @@ class User(AbstractUser):
     date_modified = models.DateTimeField(auto_now=True)
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
 
-    timeslot = models.IntegerField(default=1, blank=True)
+    time_slot = models.ForeignKey('lab.Time_Slot', on_delete=models.DO_NOTHING, blank=True, null=True)
+    ip = models.ForeignKey('lab.LabIp', on_delete=models.DO_NOTHING, blank=True, null=True)
+    login_ip = models.CharField(blank=True, null=True, max_length=255)
 
     USERNAME_FIELD = 'username'
 

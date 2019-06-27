@@ -14,11 +14,29 @@ from django.views.decorators.csrf import csrf_exempt
 import io
 import csv
 
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     authentication_classes = [JSONWebTokenAuthentication,]
     permission_classes = [IsAuthenticatedOrReadOnly,]
+
+    def retrieve(self, request, *args, **kwargs):
+        print('inside retrieve!')
+        client_ip = request.META.get('HTTP_X_FORWARDED_FOR')
+        print(client_ip)
+        if client_ip:
+            client_ip = client_ip.split(',')[0]
+        else:
+            client_ip = request.META.get('REMOTE_ADDR')
+        print(client_ip)
+        user_instance = User
+        serializer = UserSerializer(User.objects.all(), request)
+        # print(serializer.initial_data)
+        if serializer.is_valid():
+
+            print(serializer.data)
+        return super(UserViewSet, self).retrieve(request, *args, **kwargs)
 
 
 class UserListCreateAPIView(ListCreateAPIView):
@@ -41,7 +59,7 @@ def create_user(request):
 
         # Load json data from body
         # parsed_data = json.loads(request.body)
-        print("students===========",request.FILES)
+        print("students===========", request.FILES)
         csv_file = request.FILES['user_list']
         decoded_file = csv_file.read().decode('utf-8')
         io_string = io.StringIO(decoded_file)
@@ -56,6 +74,33 @@ def create_user(request):
             # UserProfile.objects.create(user=user, profile=profile_data)
             # handel error here
         return JsonResponse({'msg': 'Successfully Created!', 'success': 1}, status=status.HTTP_201_CREATED)
+
+    else:
+        return JsonResponse({'msg': 'Method not allowed!', 'success': 0}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+@csrf_exempt
+@api_view(['POST', ])
+# @permission_classes([permissions.IsAdminUser, ])
+def get_user_ip(request):
+    print('inside assign_ips')
+    if request.method == 'POST':
+        print('inside retrieve!')
+        client_ip = request.META.get('HTTP_X_FORWARDED_FOR')
+        user_name = request.data['username']
+        user = User.objects.get(username=user_name)
+
+        print(client_ip)
+        if client_ip:
+            client_ip = client_ip.split(',')[0]
+            user.login_ip = client_ip
+            user.save()
+
+        else:
+            client_ip = request.META.get('REMOTE_ADDR')
+            user.login_ip = client_ip
+            user.save()
+        print(client_ip)
+        return JsonResponse({'msg': 'Success!', 'success': 1, 'data': client_ip}, status=status.HTTP_201_CREATED)
 
     else:
         return JsonResponse({'msg': 'Method not allowed!', 'success': 0}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
