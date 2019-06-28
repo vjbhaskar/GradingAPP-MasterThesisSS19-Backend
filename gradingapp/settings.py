@@ -33,7 +33,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     'http://localhost:4200',
-    'mt-grading-app.herokuapp.com'
+    'mt-grading-app.herokuapp.com',
+    'api-gradingapp.herokuapp.com'
 ]
 
 
@@ -96,17 +97,27 @@ CORS_ALLOW_CREDENTIALS = True
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
+    # prod
     'default': dj_database_url.config(),
+    # remote
     # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'mydatabase',
-    #     'USER': 'mydatabaseuser',
-    #     'PASSWORD': 'mypassword',
-    #     'HOST': '127.0.0.1',
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'd9fkqr71spaugk',
+    #     'USER': 'dnbwmbjtrejpxi',
+    #     'PASSWORD': '0c57cc679a29c0d5190ecfaed528cb64d66a5d3687ce8f9a405a797a262b1eac',
+    #     'HOST': 'ec2-54-228-246-214.eu-west-1.compute.amazonaws.com',
+    #     'PORT': '5432',
+    # }
+
+
+    # local
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'gradingapp',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'root',
+    #     'HOST': 'localhost',
     #     'PORT': '5432',
     # }
 }
