@@ -50,7 +50,10 @@ def assign_ips(request):
         for line in csv.reader(io_string, delimiter=',', quotechar='|'):
             # print(line[0])
             # Looping all and creating student and adding number to students_list
-            student_exists = User.objects.get(username=line[0])
+            try:
+                student_exists = User.objects.filter(username=line[0])
+            except:
+                student_exists = False
             print(student_exists)
             if student_exists:
                 print("exists")

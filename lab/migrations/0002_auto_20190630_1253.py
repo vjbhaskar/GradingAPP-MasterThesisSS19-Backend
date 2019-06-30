@@ -18,11 +18,7 @@ class Migration(migrations.Migration):
             name='lab_admin',
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='lab', to=settings.AUTH_USER_MODEL),
         ),
-        migrations.AddField(
-            model_name='time_slot',
-            name='date',
-            field=models.DateField(blank=True, null=True),
-        ),
+
         migrations.AlterUniqueTogether(
             name='labip',
             unique_together={('lab', 'ip')},
