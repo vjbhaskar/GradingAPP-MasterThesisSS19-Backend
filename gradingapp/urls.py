@@ -24,6 +24,7 @@ from rest_framework.routers import DefaultRouter
 from lab_ip.views import assign_ips
 from lab_ip.views import de_assign_ips
 from lab_ip.views import assign_single_ip
+from lab.views import fetch_lab_assigned_students
 from user import views as user_views
 from file import views as file_views
 from subject import views as subject_views
@@ -57,7 +58,7 @@ urlpatterns = [
     url(r'^api/file/(?P<id>\d+)/$', file_views.FileRetrieveUpdateDestroyAPIView.as_view()),
     url(r'api/user/bulkstudents', user_views.create_user),
     url(r'api/labIp/bulk', lab_views.create_bulk_ips),
-    url(r'api/labIp/adminips', lab_views.fetch_lab_assigned_students),
+    url(r'api/labIp/adminips', fetch_lab_assigned_students),
     url(r'api/assign_single_ip/', assign_single_ip),
     url(r'api/getIp/', get_user_ip)
 

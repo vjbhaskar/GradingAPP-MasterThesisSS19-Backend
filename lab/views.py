@@ -112,7 +112,6 @@ def fetch_lab_assigned_students(request):
         return JsonResponse({'msg': 'Method not allowed!', 'success': 0}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
-
 class Time_SlotViewSet(viewsets.ModelViewSet):
     queryset = Time_Slot.objects.all()
     serializer_class = Time_SlotSerializer
