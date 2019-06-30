@@ -88,7 +88,8 @@ def fetch_lab_assigned_students(request):
             for user in users:
                 print(user.id, user.ip, user.username, user)
                 file = File.objects.filter(user=user).all()
-                file_list = [request.get_host() + x.file_obj.url for x in file]
+                file_list = [request.build_absolute_uri(x.file_obj.url) for x in file]
+
                 print(file_list)
                 data.append({
                     'username': user.username,
