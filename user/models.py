@@ -13,7 +13,7 @@ class User(AbstractUser):
       (3, 'labadmin'),
       (4, 'admin'),
     )
-    exam = models.ForeignKey(Exam, on_delete=models.DO_NOTHING, related_name='users', null=True, blank=True)
+    exam = models.ForeignKey(Exam, on_delete=models.SET_NULL, related_name='users', null=True, blank=True)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username = models.CharField(unique=True, max_length=255)
     email = models.EmailField(_('email address'), null=True)
@@ -21,8 +21,8 @@ class User(AbstractUser):
     date_modified = models.DateTimeField(auto_now=True)
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
 
-    time_slot = models.ForeignKey('lab.Time_Slot', on_delete=models.DO_NOTHING, blank=True, null=True)
-    ip = models.ForeignKey('lab.LabIp', on_delete=models.DO_NOTHING, blank=True, null=True)
+    time_slot = models.ForeignKey('lab.Time_Slot', on_delete=models.SET_NULL, blank=True, null=True)
+    ip = models.ForeignKey('lab.LabIp', on_delete=models.SET_NULL, blank=True, null=True)
     login_ip = models.CharField(blank=True, null=True, max_length=255)
 
     USERNAME_FIELD = 'username'

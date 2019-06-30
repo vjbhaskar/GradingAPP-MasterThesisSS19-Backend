@@ -12,6 +12,7 @@ from exam.models import Exam
 import io
 import csv
 from user.models import User
+from file.models import File
 from user.serializers import UserSerializer
 
 
@@ -71,28 +72,36 @@ def fetch_lab_assigned_students(request):
     print('inside assign_ips')
     if request.method == 'POST':
 
-        # Load json data from body
-        # parsed_data = json.loads(request.body)
-        #lab_id = request.data['lab_id']
-        # to get request args
+        username = request.data['username']
+        user = User.objects.get(username=username)
+        print('user====', user)
+        lab = Lab.objects.filter(lab_admin=user).get()
+        print('lab====', lab)
+        if lab:
+            print("lab is not empty")
+            lab_ips = lab.lab_ips.all()
+            lab_ips_list = [x.id for x in lab_ips]
 
-        lab_id = 8
+            users = User.objects.raw('SELECT * FROM user_user WHERE ip_id in %s' % (tuple(lab_ips_list),))
+            print(users)
+            data = []
+            for user in users:
+                print(user.id, user.ip, user.username, user)
+                file = File.objects.filter(user=user).all()
+                file_list = [request.build_absolute_uri() + x.id for x in file]
+                print(file_list)
+                data.append({
+                    'username': user.username,
+                    'ip': user.ip.ip,
+                    'login': user.login_ip,
+                    'file': file_list
+                })
 
-        lab = Lab.objects.get(pk=lab_id)
-        lab_ips = lab.lab_ips.all()
-        lab_ips_list = [x.id for x in lab_ips]
+            pprint.pprint(data)
+        else:
+            print("lab is empty")
+            return JsonResponse({'msg': 'No lab assigned', 'success': 0}, status=status.HTTP_404_NOT_FOUND)
 
-        users = User.objects.raw('SELECT * FROM user_user WHERE ip_id in %s' % (tuple(lab_ips_list),))
-        print(users)
-        data = []
-        for user in users:
-            print(user.id, user.ip, user.username)
-            data.append({
-                'username': user.username,
-                'ip': user.ip.ip
-            })
-
-        pprint.pprint(data)
         # See it json functions
         # data = json.dumps(data, ensure_ascii=False, indent=2)
 

@@ -49,7 +49,20 @@ def assign_ips(request):
         students_list = list()
         for line in csv.reader(io_string, delimiter=',', quotechar='|'):
             # print(line[0])
-            students_list.append(line[0])
+            # Looping all and creating student and adding number to students_list
+            student_exists = User.objects.get(username=line[0])
+            print(student_exists)
+            if student_exists:
+                print("exists")
+                students_list.append(line[0])
+            else:
+                user = User()
+                # ask prof to send name and dob if need to generate new pass
+                user.set_password(line[1])
+                user.username = line[0]
+                user.save()
+                students_list.append(line[0])
+
         print(students_list)
 
         random.shuffle(students_list)
