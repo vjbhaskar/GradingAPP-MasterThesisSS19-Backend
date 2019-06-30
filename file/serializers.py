@@ -8,7 +8,7 @@ class FileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True,many=False)
     class Meta:
         model = File
-        fields = ('name','is_submitted','subject', 'file_obj', 'user','creator_id','date_created')
+        fields = ('id', 'name', 'is_submitted', 'subject', 'file_obj', 'user', 'creator_id', 'date_created')
         read_only_fields = ('user',)
         depth = 1
 
