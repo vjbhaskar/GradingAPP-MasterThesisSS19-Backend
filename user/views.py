@@ -85,8 +85,10 @@ def get_user_ip(request):
     print('inside assign_ips')
     if request.method == 'POST':
         print('inside retrieve!')
-        client_ip = request.META.get('HTTP_X_FORWARDED_FOR')
+        # client_ip = request.META.get('HTTP_X_FORWARDED_FOR')
+        client_ip = request.data['ip']
         user_name = request.data['username']
+
         user = User.objects.get(username=user_name)
 
         print(client_ip)
