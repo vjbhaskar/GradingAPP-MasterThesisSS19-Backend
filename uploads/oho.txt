@@ -1,0 +1,20 @@
+Create users from csv file
+{
+  lD:"15eccf4e53048c1",
+  emailReportId:"",
+  formType:"QuickForm",
+  zx:"14ac03ba50",
+  zcvers:"2.0",
+  oldListIds:"allCheckedListIds"
+  mode:"OptinCreateView",
+  zcld:"zcld",
+  document_domain:"campaigns.zoho.eu",
+  zc_Url:"zc1.maillist-manage.eu",
+  new_optin_response_in:"2",
+  duplicate_optin_response_in:"2",
+  zc_trackCode:"ZCFORMVIEW",
+  zc_formIx:"767b0cf9525ab1d331785d3aaa78e9093d2af3e628508ae6"
+
+ } 
+
+ Zoho JSON

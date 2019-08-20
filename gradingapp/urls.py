@@ -28,6 +28,7 @@ from lab.views import fetch_lab_assigned_students
 from user import views as user_views
 from file import views as file_views
 from subject import views as subject_views
+from exercise import views as exercise_views
 from lab import views as lab_views
 from exam import views as exam_views
 from user.views import get_user_ip
@@ -41,6 +42,7 @@ router.register('lab',lab_views.LabViewSet)
 router.register('labIp',lab_views.LabIpViewSet)
 router.register('timeSlot',lab_views.Time_SlotViewSet)
 router.register('exam',exam_views.ExamViewSet)
+router.register('exercise',exercise_views.ExerciseViewSet)
 urlpatterns = [
 
     url(r'api/',include(router.urls)),

@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'subject',
     'lab',
     'time_slot',
-    'exam'
+    'exam',
+    'exercise'
 ]
 
 MIDDLEWARE = [
@@ -98,7 +99,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 DATABASES = {
     # prod
-    'default': dj_database_url.config(),
+    # 'default': dj_database_url.config(),
     # remote
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -110,16 +111,16 @@ DATABASES = {
     # }
 
 
-    # local
+    #local
 
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'gradingapp',
-    #     'USER': 'postgres',
-    #     'PASSWORD': 'root',
-    #     'HOST': 'localhost',
-    #     'PORT': '5432',
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'gradingapp',
+        'USER': 'postgres',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
 

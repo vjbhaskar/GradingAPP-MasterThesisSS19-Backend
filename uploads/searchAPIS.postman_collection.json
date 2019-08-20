@@ -1,0 +1,98 @@
+{
+	"id": "75e580b8-91ce-bf1a-cbb9-3d6c25b2b95a",
+	"name": "searchAPIS",
+	"description": "",
+	"order": [
+		"2089ea68-cb70-cc67-e55e-61622436e019",
+		"cb0f778e-4393-2557-8f21-6af78f2f4f8c"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1555108282593,
+	"owner": 0,
+	"public": false,
+	"requests": [
+		{
+			"id": "2089ea68-cb70-cc67-e55e-61622436e019",
+			"headers": "Content-Type: application/json\nAuthorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyYW1zY291dCIsImF1dGgiOiJST0xFX1NDT1VUIiwiZXhwIjoxNTU1MTk0MzkyfQ.eTtU58onIU1mbM_OeDg0NjoYvsFKIZMEhL3rcnkzZy2i3gl5XbS0ZBi5jBkRcMwLJG2S9mfilSSyOT4rekKQfg\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyYW1zY291dCIsImF1dGgiOiJST0xFX1NDT1VUIiwiZXhwIjoxNTU1MTk0MzkyfQ.eTtU58onIU1mbM_OeDg0NjoYvsFKIZMEhL3rcnkzZy2i3gl5XbS0ZBi5jBkRcMwLJG2S9mfilSSyOT4rekKQfg",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/users/user-search?query=student",
+			"queryParams": [
+				{
+					"key": "query",
+					"value": "student",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "75e580b8-91ce-bf1a-cbb9-3d6c25b2b95a",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8080/api/users/user-search?query=var",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1555108290759,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"id\": 5,\n    \"name\": \"Ram-Test-Plan-Students\",\n    \"usersAllowed\": null,\n    \"accessibleTo\": \"ROLE_STUDENT\",\n    \"amount\": 99.99,\n    \"interval\": \"MONTH\"\n}"
+		},
+		{
+			"id": "cb0f778e-4393-2557-8f21-6af78f2f4f8c",
+			"headers": "Content-Type: application/json\nAuthorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyYW1zY291dCIsImF1dGgiOiJST0xFX1NDT1VUIiwiZXhwIjoxNTU1MTk0MzkyfQ.eTtU58onIU1mbM_OeDg0NjoYvsFKIZMEhL3rcnkzZy2i3gl5XbS0ZBi5jBkRcMwLJG2S9mfilSSyOT4rekKQfg\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyYW1zY291dCIsImF1dGgiOiJST0xFX1NDT1VUIiwiZXhwIjoxNTU1MTk0MzkyfQ.eTtU58onIU1mbM_OeDg0NjoYvsFKIZMEhL3rcnkzZy2i3gl5XbS0ZBi5jBkRcMwLJG2S9mfilSSyOT4rekKQfg",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/users/user-load",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "75e580b8-91ce-bf1a-cbb9-3d6c25b2b95a",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8080/api/users/user-load",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1555108302306,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"id\": 5,\n    \"name\": \"Ram-Test-Plan-Students\",\n    \"usersAllowed\": null,\n    \"accessibleTo\": \"ROLE_STUDENT\",\n    \"amount\": 99.99,\n    \"interval\": \"MONTH\"\n}"
+		}
+	]
+}

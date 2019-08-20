@@ -16,7 +16,7 @@ class LabSerializer(serializers.ModelSerializer):
         fields = ('id', 'room_building', 'exam', 'date_created', 'date_modified', 'lab_admin', 'lab_ips')
 
     def create(self, validated_data):
-        room_building = validated_data.get('room_building',"")
+        room_building = validated_data.get('room_building', "")
         # to get request args
 
         lab_admin_id = self.initial_data['lab_admin']
