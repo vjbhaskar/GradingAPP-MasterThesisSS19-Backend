@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from exercise.serializers import ExerciseSerializer
 from user.models import User, UserProfile
 from file.models import File
 
@@ -58,12 +60,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 class FileSerializer(serializers.ModelSerializer):
     # To show users
-    user = UserSerializer(read_only=True,many=False)
+    user = UserSerializer(read_only=True, many=False)
+    exercise = ExerciseSerializer(read_only=True, many=False)
 
     class Meta:
         model = File
-        fields = ('name','is_submitted', 'file_obj', 'user','creator_id','date_created','file_binary')
-        read_only_fields = ('user',)
+        fields = ('name','is_submitted', 'file_obj', 'user', 'exercise', 'creator_id', 'date_created','file_binary')
+        read_only_fields = ('user', 'exercise')
 
     def create(self, validated_data):
         name = validated_data.get('name', "")
