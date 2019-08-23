@@ -1,10 +1,11 @@
+import io
 from rest_framework import serializers
-
 from exercise.models import Exercise
 from exercise.serializers import ExerciseSerializer
 from user.models import User
 from file.models import File
 from user.serializers import UserSerializer
+# from django.core.files import File
 
 
 class FileSerializer(serializers.ModelSerializer):
@@ -21,16 +22,46 @@ class FileSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         # self.initial_data to get the keys from frontend sent data
         request = self.context.get("request")
-        name = validated_data.get('name', "")
+
         is_submitted = validated_data.get('is_submitted', False)
-        file_obj = validated_data.get('file_obj', "")
+        is_snippet = request.data['is_snippet']
+
         creator_id = validated_data.get('creator_id', "")
-        print('creator id============ ', creator_id,)
         user_obj = User.objects.get(pk=creator_id)
         exercise_instance = Exercise.objects.get(pk=request.data['exercise'])
-        subject_id = self.initial_data['subject_id']
-        file = File(name=name, is_submitted=is_submitted, file_obj=file_obj, creator_id=creator_id, user=user_obj,
-                    exercise=exercise_instance, subject_id=subject_id)
 
-        file.save()
-        return file
+        if is_snippet == True:
+            print("in IF")
+            snippet = request.data['snippet']
+
+            filename = f'{user_obj.username}_{exercise_instance.name}.txt'
+            f = open(
+                filename,
+                "w+",
+                encoding="utf-8"
+            )
+
+            f.write(snippet)
+            print(type(f))
+            file_obj = f
+
+        else:
+            filename = validated_data.get('name', "")
+            file_obj = validated_data.get('file_obj', "")
+
+        exercise_instance = Exercise.objects.get(pk=request.data['exercise'])
+        subject_id = self.initial_data['subject_id']
+        from django.core.files import File as filex
+        file_obj = filex(file_obj)
+        new_file = File(
+            name=filename,
+            is_submitted=is_submitted,
+            file_obj=file_obj,
+            creator_id=creator_id,
+            user=user_obj,
+            exercise=exercise_instance,
+            subject_id=subject_id
+        )
+
+        new_file.save()
+        return new_file

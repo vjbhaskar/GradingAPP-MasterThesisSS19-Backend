@@ -14,6 +14,7 @@ class File(models.Model):
     # Remove in future creator_id is redundant
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, null=True, related_name='files')
     creator_id = models.CharField(max_length=255)
+    is_snippet = models.BooleanField(default=False)
     file_binary = models.BinaryField(null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)

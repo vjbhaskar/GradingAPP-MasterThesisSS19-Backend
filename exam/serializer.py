@@ -30,7 +30,8 @@ class ExamSerializer(serializers.ModelSerializer):
 
         for exercise in exercises:
             ex_name = exercise['name']
-            exercise_instance = Exercise(name=ex_name, exam=exam, subject=subject_instance)
+            ex_description = exercise['description']
+            exercise_instance = Exercise(name=ex_name, description=ex_description,  exam=exam, subject=subject_instance)
             exercise_instance.save()
 
         return exam
