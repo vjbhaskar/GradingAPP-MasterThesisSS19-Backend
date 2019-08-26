@@ -62,7 +62,8 @@ urlpatterns = [
     url(r'api/labIp/bulk', lab_views.create_bulk_ips),
     url(r'api/labIp/adminips', fetch_lab_assigned_students),
     url(r'api/assign_single_ip/', assign_single_ip),
-    url(r'api/getIp/', get_user_ip)
+    url(r'api/getIp/', get_user_ip),
+    url(r'api/printSingleFile/', file_views.print_single_file)
 
 
     # url(r'^api/assignstudents/$',lab_ip_views.LabIpUpdateAPIView.as_view()),

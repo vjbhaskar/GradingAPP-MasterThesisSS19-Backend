@@ -29,8 +29,8 @@ class FileSerializer(serializers.ModelSerializer):
         creator_id = validated_data.get('creator_id', "")
         user_obj = User.objects.get(pk=creator_id)
         exercise_instance = Exercise.objects.get(pk=request.data['exercise'])
-
-        if is_snippet == True:
+        print("is_snippet===============", is_snippet)
+        if is_snippet == str(True):
             print("in IF")
             snippet = request.data['snippet']
 
@@ -44,6 +44,7 @@ class FileSerializer(serializers.ModelSerializer):
             f.write(snippet)
             print(type(f))
             file_obj = f
+            print("file_obj=========", file_obj)
 
         else:
             filename = validated_data.get('name', "")
