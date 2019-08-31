@@ -80,7 +80,7 @@ def print_single_file(request):
             file_obj=file_obj,
             creator_id=user_instance.id,
             user=user_instance,
-            exercise=exercise_instance,
+            exercise=None,
             subject_id=file_instance.subject.id
         )
 
