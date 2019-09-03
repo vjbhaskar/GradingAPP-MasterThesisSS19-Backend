@@ -55,7 +55,9 @@ INSTALLED_APPS = [
     'lab',
     'time_slot',
     'exam',
-    'exercise'
+    'exercise',
+    'print_files'
+
 ]
 
 MIDDLEWARE = [
@@ -69,6 +71,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+
 
 ]
 

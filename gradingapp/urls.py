@@ -32,6 +32,7 @@ from exercise import views as exercise_views
 from lab import views as lab_views
 from exam import views as exam_views
 from user.views import get_user_ip
+from print_files import views as print_file_views
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -43,6 +44,7 @@ router.register('labIp',lab_views.LabIpViewSet)
 router.register('timeSlot',lab_views.Time_SlotViewSet)
 router.register('exam',exam_views.ExamViewSet)
 router.register('exercise',exercise_views.ExerciseViewSet)
+router.register('print_files', print_file_views.PrintFileViewSet)
 urlpatterns = [
 
     url(r'api/',include(router.urls)),
@@ -63,7 +65,7 @@ urlpatterns = [
     url(r'api/labIp/adminips', fetch_lab_assigned_students),
     url(r'api/assign_single_ip/', assign_single_ip),
     url(r'api/getIp/', get_user_ip),
-    url(r'api/printSingleFile/', file_views.print_single_file)
+    url(r'api/printSingleFile/', print_file_views.print_single_file)
 
 
     # url(r'^api/assignstudents/$',lab_ip_views.LabIpUpdateAPIView.as_view()),
