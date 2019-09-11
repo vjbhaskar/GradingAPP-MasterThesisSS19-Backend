@@ -9,13 +9,11 @@ class PDF(FPDF):
     def Val(self,f):
         global head_valk
         self.head_valk = f
-        print("LLLL=======",head_valk)
 
     def header(self):
         # Logo
         # Arial bold 15
         global head_valk
-        print("toitle---------------",self.head_valk)
         self.set_font('Arial', 'B', 9)
         # Text color in gray
         self.set_text_color(128)

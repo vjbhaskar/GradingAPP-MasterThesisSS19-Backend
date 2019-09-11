@@ -62,6 +62,8 @@ def print_single_file(request):
         else:
             file_list = request.data['file_list']
             pdf_bulk = PDF()
+            tempuserObj = None
+            counter = 0
             for file_item in file_list:
 
                 file_instance = File.objects.get(pk=file_item)
@@ -80,11 +82,58 @@ def print_single_file(request):
                 bf = file_instance.file_obj.read().decode("utf_8", 'replace')
                 bf = unidecode(bf)
                 new_file_name = "print_bulk_"+ exercise_instance.exam.name
-                pdf_bulk.Val(header_text_val)
 
+
+
+                # Name, Exam, Date, Time, and loginID
+                frontPage_name = "Name: " + full_name
+                frontPage_exam = "Exam: " + exam_name
+                frontPage_date = "Date: " + date
+                frontPage_timeSlot = "Time: "+ user_instance.time_slot.start_time + "-"+ user_instance.time_slot.end_time
+                frontPage_loginId = "Login ID: " + user_instance.username
+                # First condition to add Head Page
+                if counter == 0:
+                    print("First condition")
+                    tempuserObj = user_instance
+                    pdf_bulk.Val(header_text_val)
+                    pdf_bulk.add_page()
+                    pdf_bulk.set_font("Arial", size=12)
+                    pdf_bulk.cell(0, 5, txt=frontPage_name)
+                    pdf_bulk.ln(10)
+                    pdf_bulk.cell(0, 5, txt=frontPage_exam)
+                    pdf_bulk.ln(10)
+                    pdf_bulk.cell(0, 5, txt=frontPage_date)
+                    pdf_bulk.ln(10)
+                    pdf_bulk.cell(0, 5, txt=frontPage_timeSlot)
+                    pdf_bulk.ln(10)
+                    pdf_bulk.cell(0, 5, txt=frontPage_loginId)
+                counter = counter + 1
+
+                if counter !=0 and tempuserObj != user_instance:
+                    print("not equal condition")
+                    tempuserObj = user_instance
+                    pdf_bulk.add_page()
+                    pdf_bulk.set_font("Arial", size=12)
+                    pdf_bulk.cell(0, 5, txt="Signature:")
+                    pdf_bulk.ln(10)
+                    pdf_bulk.Val(header_text_val)
+                    pdf_bulk.add_page()
+                    pdf_bulk.cell(0, 5, txt=frontPage_name)
+                    pdf_bulk.ln(10)
+                    pdf_bulk.cell(0, 5, txt=frontPage_exam)
+                    pdf_bulk.ln(10)
+                    pdf_bulk.cell(0, 5, txt=frontPage_date)
+                    pdf_bulk.ln(10)
+                    pdf_bulk.cell(0, 5, txt=frontPage_timeSlot)
+                    pdf_bulk.ln(10)
+                    pdf_bulk.cell(0, 5, txt=frontPage_loginId)
+                pdf_bulk.Val(header_text_val)
                 pdf_bulk.add_page()
-                pdf_bulk.set_font("Arial", size=12)
                 pdf_bulk.multi_cell(0, 5, bf)
+                if counter == len(file_list):
+                    pdf_bulk.add_page()
+                    pdf_bulk.set_font("Arial", size=12)
+                    pdf_bulk.cell(0, 5, txt="Signature:")
             pdf_bulk.output("simple_demo.pdf").encode('latin-1')
 
         f = open("simple_demo.pdf", 'rb')
@@ -92,7 +141,7 @@ def print_single_file(request):
 
         file_obj = filexx(f)
 
-        print("After convert ", type(file_obj), file_obj)
+
 
         user_obj = User.objects.get(username=user_id)
         new_file = Print_File(
@@ -106,7 +155,6 @@ def print_single_file(request):
         new_file.save()
         f.close()
 
-        print(new_file)
 
         return JsonResponse({'msg': 'Successfully Assigned!', 'success': 1}, status=status.HTTP_200_OK)
 

@@ -69,29 +69,24 @@ def create_bulk_ips(request):
 @csrf_exempt
 @api_view(['POST', ])
 def fetch_lab_assigned_students(request):
-    print('inside assign_ips')
     if request.method == 'POST':
 
         username = request.data['username']
         user = User.objects.get(username=username)
-        print('user====', user)
         lab = Lab.objects.filter(lab_admin=user).get()
-        print('lab====', lab)
         if lab:
             print("lab is not empty")
             lab_ips = lab.lab_ips.all()
             lab_ips_list = [x.id for x in lab_ips]
 
             users = User.objects.raw('SELECT * FROM user_user WHERE ip_id in %s' % (tuple(lab_ips_list),))
-            print(users)
+
             data = []
             for user in users:
-                print(user.id, user.ip, user.username, user)
                 file = File.objects.filter(user=user).all()
                 file_list = [request.build_absolute_uri(x.file_obj.url) for x in file]
                 file_ids = [x.id for x in file]
                 file_names = [x.name for x in file]
-                print(file_list)
                 data.append({
                     'username': user.username,
                     'ip': user.ip.ip,
