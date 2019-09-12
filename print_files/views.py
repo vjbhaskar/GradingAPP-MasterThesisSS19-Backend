@@ -91,9 +91,18 @@ def print_single_file(request):
                 frontPage_date = "Date: " + date
                 frontPage_timeSlot = "Time: "+ user_instance.time_slot.start_time + "-"+ user_instance.time_slot.end_time
                 frontPage_loginId = "Login ID: " + user_instance.username
+                frontPage_exercises = "Exercises Submitted: "
+                submitted_exercise_names = ""
                 # First condition to add Head Page
                 if counter == 0:
-                    print("First condition")
+                    print("First condition=========",len(user_instance.files.all()))
+
+                    for ex_name in user_instance.files.all():
+                        if ex_name.exercise.exam.name == exam_instance.name:
+                            print("same exam====",ex_name.exercise.name)
+                            submitted_exercise_names = submitted_exercise_names + ex_name.exercise.name + " "
+
+
                     tempuserObj = user_instance
                     pdf_bulk.Val(header_text_val)
                     pdf_bulk.add_page()
@@ -107,10 +116,19 @@ def print_single_file(request):
                     pdf_bulk.cell(0, 5, txt=frontPage_timeSlot)
                     pdf_bulk.ln(10)
                     pdf_bulk.cell(0, 5, txt=frontPage_loginId)
+                    pdf_bulk.ln(10)
+                    frontPage_exercises = frontPage_exercises +submitted_exercise_names
+                    pdf_bulk.cell(0, 5, txt=frontPage_exercises)
+                    pdf_bulk.ln(10)
+                    pdf_bulk.cell(0, 5, txt="Signature:")
                 counter = counter + 1
 
                 if counter !=0 and tempuserObj != user_instance:
                     print("not equal condition")
+                    for ex_name in user_instance.files.all():
+                        if ex_name.exercise.exam.name == exam_instance.name:
+                            print("same exam====",ex_name.exercise.name)
+                            submitted_exercise_names = submitted_exercise_names + ex_name.exercise.name + " "
                     tempuserObj = user_instance
                     pdf_bulk.add_page()
                     pdf_bulk.set_font("Arial", size=12)
@@ -127,6 +145,11 @@ def print_single_file(request):
                     pdf_bulk.cell(0, 5, txt=frontPage_timeSlot)
                     pdf_bulk.ln(10)
                     pdf_bulk.cell(0, 5, txt=frontPage_loginId)
+                    pdf_bulk.ln(10)
+                    frontPage_exercises = frontPage_exercises +submitted_exercise_names
+                    pdf_bulk.cell(0, 5, txt=frontPage_exercises)
+                    pdf_bulk.ln(10)
+                    pdf_bulk.cell(0, 5, txt="Signature:")
                 pdf_bulk.Val(header_text_val)
                 pdf_bulk.add_page()
                 pdf_bulk.multi_cell(0, 5, bf)
