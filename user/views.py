@@ -64,12 +64,26 @@ def create_user(request):
         decoded_file = csv_file.read().decode('utf-8')
         io_string = io.StringIO(decoded_file)
         for line in csv.reader(io_string, delimiter=',', quotechar='|'):
-            print(line[0], line[1])
+            print(line[0])
             profile_data = None
+            split_text = line[0].split(';')
+            first_name = split_text[0]
+            last_name= split_text[1]
+            matrikel_number = split_text[2]
+
+            # int_list = list(int_type)
+
+            #password = sum([int(x) for x in matrikel_number])
+
+            password = last_name+matrikel_number
+            print("password==",password)
+            # print(split_text[1],split_text[0],split_text[2])
             user = User()
             # ask prof to send name and dob if need to generate new pass
-            user.set_password(line[1])
-            user.username = line[0]
+            user.set_password(password)
+            user.username = matrikel_number
+            user.first_name = first_name
+            user.last_name = last_name
             user.save()
             # UserProfile.objects.create(user=user, profile=profile_data)
             # handel error here

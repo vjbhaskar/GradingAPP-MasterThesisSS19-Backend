@@ -51,22 +51,40 @@ def assign_ips(request):
             # print(line[0])
             # Looping all and creating student and adding number to students_list
             try:
-                student_exists = User.objects.filter(username=line[0])
+                split_text = line[0].split(';')
+                student_exists = User.objects.filter(username=split_text[2])
             except:
                 student_exists = False
-            print(student_exists)
             if student_exists:
                 print("exists")
-                students_list.append(line[0])
+                split_text = line[0].split(';')
+                students_list.append(split_text[2])
             else:
                 user = User()
                 # ask prof to send name and dob if need to generate new pass
-                user.set_password(line[1])
-                user.username = line[0]
+                profile_data = None
+                split_text = line[0].split(';')
+                first_name = split_text[0]
+                last_name= split_text[1]
+                matrikel_number = split_text[2]
+
+                # int_list = list(int_type)
+
+                #password = sum([int(x) for x in matrikel_number])
+
+                password = last_name+matrikel_number
+                print("password==",password)
+                # print(split_text[1],split_text[0],split_text[2])
+                user = User()
+                # ask prof to send name and dob if need to generate new pass
+                user.set_password(password)
+                user.username = matrikel_number
+                user.first_name = first_name
+                user.last_name = last_name
                 user.save()
                 students_list.append(line[0])
 
-        print(students_list)
+
 
         random.shuffle(students_list)
 
@@ -77,24 +95,28 @@ def assign_ips(request):
         print(ip_count, len(students_list))
         students_length = len(students_list)
         temp_students_list = students_list
+        print("Temps tudent list ",len(temp_students_list))
         # Case 1 when we have more ips and less students
 
         if ip_count >= students_length:
 
+            each_lab_student_count = students_length/len(exam_labs)
             # we iterate over each lab and assign the students with single time slot
 
             for i in range(len(exam_labs)):
                 exam_lab_ips = exam.lab_set.all()[i].lab_ips.all()
+                print(" Number of IPS", len(exam_lab_ips))
 
                 for j in range(len(exam_lab_ips)):
                     if len(temp_students_list) > 0:
-                        print("student username", students_list[0])
-                        student_instance = User.objects.get(username=students_list[0])
-                        student_instance.ip = exam_lab_ips[j]
-                        student_instance.time_slot = exam_time_slots[0]
-                        student_instance.exam = exam
-                        student_instance.save()
-                        temp_students_list.pop(0)
+                        if j <= each_lab_student_count:
+                            print("student username", students_list[0])
+                            student_instance = User.objects.get(username=students_list[0])
+                            student_instance.ip = exam_lab_ips[j]
+                            student_instance.time_slot = exam_time_slots[0]
+                            student_instance.exam = exam
+                            student_instance.save()
+                            temp_students_list.pop(0)
 
         else:
 
@@ -116,65 +138,6 @@ def assign_ips(request):
                             student_instance.save()
                             temp_students_list.pop(0)
 
-
-
-
-        # # Store array of User IDS in Students List
-        # students_list = list(parsed_data.get('students'))
-        #
-        # random.shuffle(students_list)
-
-        # For demo test == get exam ID from request
-
-
-        # # Fetch all IPs where student is None
-        # labs = Lab.objects.all()
-        # # labs_labips = labs[0].lab_ips.all()
-        #
-        # lab_ips = LabIp.objects.all()
-        # # get the counts for students and ips
-        # students_count = len(students_list)
-        # temp_students_list = students_list
-        # ip_count = len(lab_ips)
-        # print('total ip count===',ip_count)
-        #
-        # #New code
-        #
-        # for i in range(len(labs)):
-        #     current_lab_ips = labs[i].lab_ips.all()
-        #     if current_lab_ips is not None:
-        #         for current_lab_ip in current_lab_ips:
-        #             temp_std_count = len(temp_students_list)
-        #             if temp_std_count > 0:
-        #                 print("current_lab_ip,temp_students_list[0]===",current_lab_ip,temp_students_list[0])
-        #                 student = User.objects.get(pk=temp_students_list[0])
-        #                 current_lab_ip.student1 = student
-        #                 student.timeslot = 1
-        #                 print("done assigning ip for student 1",temp_students_list)
-        #                 temp_students_list.pop(0)
-        #                 student.save()
-        #                 # save the IP
-        #                 current_lab_ip.save()
-        #
-        # if ip_count < students_count:
-        #     for i in range(len(labs)):
-        #         current_lab_ips = labs[i].lab_ips.all()
-        #         if current_lab_ips is not None:
-        #             for current_lab_ip in current_lab_ips:
-        #                 temp_std_count = len(temp_students_list)
-        #                 if temp_std_count > 0:
-        #                     print("current_lab_ip,temp_students_lisct[0]===",current_lab_ip,temp_students_list[0])
-        #                     student = User.objects.get(pk=temp_students_list[0])
-        #                     current_lab_ip.student2 = student
-        #                     student.timeslot = 2
-        #                     print("done assigning ip for student 2",temp_students_list)
-        #                     temp_students_list.pop(0)
-        #                     student.save()
-        #                     # save the IP
-        #                     current_lab_ip.save()
-        # else:
-        #     # timeslot 2
-        #     return JsonResponse({'msg': 'Not enough IPs Please set time slot', 'success': 0}, status=status.HTTP_400_BAD_REQUEST)
 
         return JsonResponse({'msg': 'Successfully assigned!', 'success': 1}, status=status.HTTP_200_OK)
     else:

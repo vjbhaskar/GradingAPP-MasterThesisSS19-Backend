@@ -22,7 +22,7 @@ class User(AbstractUser):
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
 
     time_slot = models.ForeignKey('lab.Time_Slot', on_delete=models.SET_NULL, blank=True, null=True)
-    ip = models.ForeignKey('lab.LabIp', on_delete=models.SET_NULL, blank=True, null=True)
+    ip = models.ForeignKey('lab.LabIp', related_name='users', on_delete=models.SET_NULL, blank=True, null=True)
     login_ip = models.CharField(blank=True, null=True, max_length=255)
 
     USERNAME_FIELD = 'username'
