@@ -82,7 +82,7 @@ def assign_ips(request):
                 user.first_name = first_name
                 user.last_name = last_name
                 user.save()
-                students_list.append(line[0])
+                students_list.append(matrikel_number)
 
 
 
