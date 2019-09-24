@@ -34,8 +34,8 @@ class LabIpViewSet(viewsets.ModelViewSet):
 
 # Function based view
 
-@csrf_exempt
 @api_view(['POST', ])
+@csrf_exempt
 def create_bulk_ips(request):
     print('inside assign_ips')
     if request.method == 'POST':
