@@ -98,26 +98,26 @@ DATABASES = {
     # prod
     # 'default': dj_database_url.config(),
     # remote
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd9fkqr71spaugk',
-        'USER': 'dnbwmbjtrejpxi',
-        'PASSWORD': '0c57cc679a29c0d5190ecfaed528cb64d66a5d3687ce8f9a405a797a262b1eac',
-        'HOST': 'ec2-54-228-246-214.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432',
-    }
+    #'default': {
+     #   'ENGINE': 'django.db.backends.postgresql_psycopg2',
+     #   'NAME': 'd9fkqr71spaugk',
+     #   'USER': 'dnbwmbjtrejpxi',
+     #   'PASSWORD': '0c57cc679a29c0d5190ecfaed528cb64d66a5d3687ce8f9a405a797a262b1eac',
+     #   'HOST': 'ec2-54-228-246-214.eu-west-1.compute.amazonaws.com',
+     #   'PORT': '5432',
+    #}
 
 
     #local
 
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'gradingapp',
-    #     'USER': 'postgres',
-    #     'PASSWORD': 'root',
-    #     'HOST': 'localhost',
-    #     'PORT': '5432',
-    # }
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+         'NAME': 'gradingapp',
+         'USER': 'postgres',
+         'PASSWORD': 'root',
+         'HOST': 'localhost',
+         'PORT': '5432',
+     }
 }
 
 

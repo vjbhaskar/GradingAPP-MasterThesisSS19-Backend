@@ -50,7 +50,7 @@ urlpatterns = [
     url(r'api/',include(router.urls)),
     url(r'api/assign_students/', assign_ips),
     url(r'api/de_assign_students/', de_assign_ips),
-    url(r'^admin/', admin.site.urls),
+    url(r'admin/', admin.site.urls),
     url(r'^auth-jwt/', obtain_jwt_token),
     url(r'^auth-jwt-refresh/', refresh_jwt_token),
     url(r'^auth-jwt-verify/', verify_jwt_token),
