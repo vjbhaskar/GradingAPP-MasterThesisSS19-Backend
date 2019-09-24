@@ -4,7 +4,10 @@ import pprint
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, status
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import api_view
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+
 from lab.models import Lab, LabIp, Time_Slot
 from lab.serializer import Time_SlotSerializer, LabSerializer
 from lab_ip.serializers import LabIpSerializer
@@ -17,11 +20,15 @@ from user.serializers import UserSerializer
 
 
 class LabViewSet(viewsets.ModelViewSet):
+
+    authentication_classes = [JSONWebTokenAuthentication, SessionAuthentication]
     queryset = Lab.objects.all()
     serializer_class = LabSerializer
 
 
 class LabIpViewSet(viewsets.ModelViewSet):
+
+    authentication_classes = [JSONWebTokenAuthentication, SessionAuthentication]
     queryset = LabIp.objects.all()
     serializer_class = LabIpSerializer
 
@@ -112,5 +119,7 @@ def fetch_lab_assigned_students(request):
 
 
 class Time_SlotViewSet(viewsets.ModelViewSet):
+
+    authentication_classes = [JSONWebTokenAuthentication, SessionAuthentication]
     queryset = Time_Slot.objects.all()
     serializer_class = Time_SlotSerializer
