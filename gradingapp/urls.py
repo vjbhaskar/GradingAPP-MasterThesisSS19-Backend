@@ -47,7 +47,7 @@ router.register('exercise',exercise_views.ExerciseViewSet)
 router.register('print_files', print_file_views.PrintFileViewSet)
 urlpatterns = [
 
-    url(r'',include(router.urls)),
+    url(r'api/',include(router.urls)),
     url(r'api/assign_students/', assign_ips),
     url(r'api/de_assign_students/', de_assign_ips),
     url(r'admin/', admin.site.urls),
