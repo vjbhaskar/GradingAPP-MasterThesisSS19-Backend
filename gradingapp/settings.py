@@ -30,13 +30,7 @@ SECRET_KEY = 'h!04_0uk(uo)@q6pbjxohv_r+&orl!x!@5d-$zzalm0)@^gdl1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'localhost',
-    'http://localhost:4200',
-    'mt-grading-app.herokuapp.com',
-    'api-gradingapp.herokuapp.com'
-]
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
