@@ -1,6 +1,8 @@
 import json
 
 from rest_framework import viewsets
+from rest_framework.authentication import SessionAuthentication
+
 from user.models import User, UserProfile
 from user.serializers import UserSerializer
 # Also add these imports
@@ -40,11 +42,13 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class UserListCreateAPIView(ListCreateAPIView):
+    authentication_classes = [JSONWebTokenAuthentication, SessionAuthentication]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
 class BulkStudentAPIView(ListCreateAPIView):
+    authentication_classes = [JSONWebTokenAuthentication, SessionAuthentication]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
