@@ -55,6 +55,7 @@ class BulkStudentAPIView(ListCreateAPIView):
 # Function based view
 
 
+@csrf_exempt
 @api_view(['POST', ])
 # @permission_classes([permissions.IsAdminUser, ])
 def create_user(request):
