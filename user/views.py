@@ -72,15 +72,15 @@ def create_user(request):
             print(line[0])
             profile_data = None
             split_text = line[0].split(';')
-            first_name = split_text[0]
-            last_name= split_text[1]
+            first_name = split_text[1]
+            last_name= split_text[0]
             matrikel_number = split_text[2]
 
             # int_list = list(int_type)
 
             #password = sum([int(x) for x in matrikel_number])
 
-            password = last_name+matrikel_number
+            password = matrikel_number
             print("password==",password)
             # print(split_text[1],split_text[0],split_text[2])
             user = User()
