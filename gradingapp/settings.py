@@ -195,3 +195,5 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
+
+FORCE_SCRIPT_NAME = '/rest'
