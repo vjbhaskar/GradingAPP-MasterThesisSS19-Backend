@@ -37,13 +37,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 router=DefaultRouter()
-router.register('users',user_views.UserViewSet)
-router.register('subject',subject_views.SubjectViewSet)
-router.register('lab',lab_views.LabViewSet)
-router.register('labIp',lab_views.LabIpViewSet)
-router.register('timeSlot',lab_views.Time_SlotViewSet)
-router.register('exam',exam_views.ExamViewSet)
-router.register('exercise',exercise_views.ExerciseViewSet)
+router.register('users', user_views.UserViewSet)
+router.register('subject', subject_views.SubjectViewSet)
+router.register('lab', lab_views.LabViewSet)
+router.register('labIp', lab_views.LabIpViewSet)
+router.register('timeSlot', lab_views.Time_SlotViewSet)
+router.register('exam', exam_views.ExamViewSet)
+router.register('exercise', exercise_views.ExerciseViewSet)
 router.register('print_files', print_file_views.PrintFileViewSet)
 urlpatterns = [
 
